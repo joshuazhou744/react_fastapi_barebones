@@ -1,10 +1,14 @@
 import { useState } from 'react'
+import Form from './Form'
 
 function App() {
-  return (
-    <>
 
-    </>
+
+
+  return (
+    <div>
+      <Form />
+    </div>
   )
 }
 
