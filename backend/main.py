@@ -5,18 +5,15 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from model import Climb
 from enum import Enum
-from dotenv import load_dotenv
+from dotenv import dotenv_values
 import os
 
-def configure():
-    load_dotenv()
-    password = os.getenv('password')
-    return password
+config = dotenv_values(".env")
+DATABASE_URI = config.get("DATABASE_URI")
+if os.getenv("DATABASE_URI") : DATABASE_URI = os.getenv("DATABASE_URI")
 
-password = configure()
-
-connection_string = f"mongodb+srv://admin:{password}@cluster0.6jhzc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-client = motor.motor_asyncio.AsyncIOMotorClient(connection_string)
+connection_string = DATABASE_URI
+client = motor.motor_asyncio.AsyncIOMotorClient(DATABASE_URI)
 
 app = FastAPI()
 
