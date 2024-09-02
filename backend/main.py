@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from config import password # gitignored, contains password
 from model import Climb
 from enum import Enum
+import config
 
 connection_string = f"mongodb+srv://admin:{password}@cluster0.6jhzc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = motor.motor_asyncio.AsyncIOMotorClient(connection_string)
