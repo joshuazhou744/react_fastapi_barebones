@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import motor.motor_asyncio
 import pprint
+from fastapi.middleware.cors import CORSMiddleware
 
 from config import password # gitignored, contains password
 from model import Climb
@@ -11,6 +12,16 @@ client = motor.motor_asyncio.AsyncIOMotorClient(connection_string)
 
 app = FastAPI()
 
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 def get_db():
     return client["test_db"]
 
@@ -19,6 +30,15 @@ def get_climb_collection():
     collection = db["climbs"]
     return collection
 
+@app.get("/climbs/")
+async def get_all_climbs():
+    collection = get_climb_collection()
+    cursor = collection.find({})  
+    climbs = []
+    async for document in cursor:
+        document["_id"] = str(document["_id"])
+        climbs.append(document)
+    return climbs
 
 @app.post("/climbs/")
 async def post_climb(climb: Climb):
@@ -58,15 +78,12 @@ async def change_title(climb_id: int, new_title: str):
     print("document is now %s" % pprint.pformat(new_document))
     return str(new_document)
 
-@app.delete("/climbs/")
-async def del_climb(title: str | None = None, climb_id: int | None = None):
+@app.delete("/climbs/{title}")
+async def del_climb(title: str):
     collection = get_climb_collection()
     n = await collection.count_documents({})
     print("%s documents before calling delete_one()" % n)
-    if title is not None:
-        result = await collection.delete_one({"title": title})
-    else:
-        result = await collection.delete_one({"climb_id": climb_id})
+    result = await collection.delete_one({"title": title})
     print("%s documents after" % (n))
     return str(result)
 

@@ -1,20 +1,16 @@
-import { React, useState} from 'react'
+import { React, useState, useEffect} from 'react'
+import axios from 'axios'
 
-let posts = []
 
 function Form() {
 
     const [content, setContent] = useState('')
     const [title, setTitle] = useState('')
+    const [grade, setGrade] = useState("")
 
-    const addPost = (e) => {
-        e.preventDefault()
-        const noteObject = {
-            title: title,
-            content: content
-        }
-        posts.push(noteObject)
-        console.log(posts)
+    const addPostHandler = () => {
+        axios.post('http://localhost:8000/climbs', {"title" : title, "content": content, "grade": grade})
+        .then(res => console.log(res))
     }
 
   return (
@@ -23,16 +19,15 @@ function Form() {
         <span className="card">
             <input className='titleIn' placeholder='Title' onChange={event => {
                 setTitle(event.target.value)
-                console.log(title)
             }}/>
             <input className='contentIn' placeholder='Content' onChange={event => {
                 setContent(event.target.value)
-                console.log(content)
             }}/>
-            <button className='btn' onClick={addPost}>Add Post</button>
+            <input className='gradeIn' placeholder='Grade' onChange={event => {
+                setGrade(event.target.value)
+            }}/>
+            <button className='btn' onClick={addPostHandler}>Add Post</button>
         </span>
-
-        <h1>Posts</h1>
     </div>
   )
 }
