@@ -3,12 +3,17 @@ import motor.motor_asyncio
 import pprint
 from fastapi.middleware.cors import CORSMiddleware
 
-from config import password # gitignored, contains password
 from model import Climb
 from enum import Enum
+from dotenv import load_dotenv
 import os
 
-password = os.getenv("MONGODB_PASSWORD")
+def configure():
+    load_dotenv()
+    password = os.getenv('password')
+    return password
+
+password = configure()
 
 connection_string = f"mongodb+srv://admin:{password}@cluster0.6jhzc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = motor.motor_asyncio.AsyncIOMotorClient(connection_string)
