@@ -7,9 +7,10 @@ import Posts from './Posts'
 function App() {
 
   const [posts, setPosts] = useState([{}])
+  console.log(process.env.API_URL)
 
     useEffect(() => {
-        axios.get('http://localhost:8000/climbs')
+        axios.get(`${process.env.API_URL}/climbs`)
         .then(res => {
             setPosts(res.data)
         })

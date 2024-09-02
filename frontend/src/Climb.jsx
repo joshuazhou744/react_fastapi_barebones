@@ -4,7 +4,7 @@ import './Climb.css'
 
 function Climb({climb}) {
     const deleteClimbHandler = (title) => {
-        axios.delete(`http://localhost:8000/climbs/${title}`)
+        axios.delete(`${process.env.API_URL}/${title}`)
             .then(res => console.log(res.data))
     }
 

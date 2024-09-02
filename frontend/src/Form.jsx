@@ -9,7 +9,7 @@ function Form() {
     const [grade, setGrade] = useState("")
 
     const addPostHandler = () => {
-        axios.post('http://localhost:8000/climbs', {"title" : title, "content": content, "grade": grade})
+        axios.post(`${process.env.API_URL}/climbs`, {"title" : title, "content": content, "grade": grade})
         .then(res => console.log(res))
     }
 
