@@ -11,7 +11,6 @@ import os
 load_dotenv()
 DATABASE_URI = os.getenv("DATABASE_URI")
 
-connection_string = DATABASE_URI
 client = motor.motor_asyncio.AsyncIOMotorClient(DATABASE_URI)
 
 app = FastAPI()

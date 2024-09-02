@@ -3,13 +3,15 @@ import Form from './Form'
 import axios from 'axios'
 import Posts from './Posts'
 
+const VITE_API_URL = import.meta.env.VITE_API_URL
+console.log(VITE_API_URL)
+
 function App() {
 
   const [posts, setPosts] = useState([{}])
-  console.log(process.env.API_URL)
 
     useEffect(() => {
-        axios.get(`${process.env.API_URL}/climbs`)
+        axios.get(`http://localhost:8000/climbs`)
         .then(res => {
             setPosts(res.data)
         })
@@ -17,8 +19,8 @@ function App() {
 
   return (
     <div>
-      <Form />
-      <Posts climbs={posts}/>
+      <Form url={VITE_API_URL}/>
+      <Posts climbs={posts} url={VITE_API_URL}/>
     </div>
   )
 }

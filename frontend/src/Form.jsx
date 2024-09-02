@@ -1,16 +1,19 @@
 import { React, useState, useEffect} from 'react'
 import axios from 'axios'
 
-
-function Form() {
+function Form({url}) {
 
     const [content, setContent] = useState('')
     const [title, setTitle] = useState('')
     const [grade, setGrade] = useState("")
 
     const addPostHandler = () => {
-        axios.post(`${process.env.API_URL}/climbs`, {"title" : title, "content": content, "grade": grade})
-        .then(res => console.log(res))
+        if (title && content) {
+            axios.post(`${url}/climbs`, {"title" : title, "content": content, "grade": grade})
+            .then(res => console.log(res))
+        } else {
+            console.log("enter title and content values")
+        }
     }
 
   return (
