@@ -3,7 +3,6 @@ import Form from './Form'
 import axios from 'axios'
 import Posts from './Posts'
 
-
 function App() {
 
   const [posts, setPosts] = useState([{}])
