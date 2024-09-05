@@ -11,7 +11,7 @@ function App() {
   const [posts, setPosts] = useState([{}])
 
     useEffect(() => {
-        axios.get(`http://localhost:8000/climbs`)
+        axios.get(`${VITE_API_URL}/climbs`)
         .then(res => {
             setPosts(res.data)
         })

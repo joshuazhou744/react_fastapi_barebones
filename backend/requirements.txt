@@ -1,3 +1,6 @@
 fastapi[standard]
+pymongo[srv]
 motor
 pydantic
+python-dotenv
+uvicorn
